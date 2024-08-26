@@ -1,133 +1,133 @@
 'use strict';
 
 // Selecting elements
-const playerEls = [document.querySelector('.player--0'), document.querySelector('.player--1')];
-const diceEls = [document.querySelector('.dice--1'), document.querySelector('.dice--2')];
-const scoreEls = [document.getElementById('score--0'), document.getElementById('score--1')];
-const currentScoreEls = [document.getElementById('current--0'), document.getElementById('current--1')];
-const nameEls = [document.getElementById('name--0'), document.getElementById('name--1')];
+const player0El = document.querySelector('.player--0');
+const player1El = document.querySelector('.player--1');
+const score0El = document.querySelector('#score--0');
+const score1El = document.querySelector('#score--1');
+const current0El = document.querySelector('#current--0');
+const current1El = document.querySelector('#current--1');
+const name0El = document.querySelector('#name--0');
+const name1El = document.querySelector('#name--1');
+const diceEl = document.querySelector('.dice');
+const btnNew = document.querySelector('.btn--new');
 const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
-const btnNew = document.querySelector('.btn--new');
-const overlay = document.getElementById('start-overlay');
-const namesForm = document.getElementById('names-form');
-const winningScoreForm = document.getElementById('winning-score-form');
-const playerCountInput = document.getElementById('player-count');
-const playerNameInputs = [document.getElementById('player1-name'), document.getElementById('player2-name')];
-const winningScoreInput = document.getElementById('winning-score');
+const namesForm = document.querySelector('#names-form');
+const winningScoreForm = document.querySelector('#winning-score-form');
+const winningScoreInput = document.querySelector('#winning-score');
+const overlay = document.querySelector('#start-overlay');
 
-// Game variables
-let scores, currentScore, activePlayer, playing, diceRolls, winningScore;
-let playerCount = 2;
+let scores, currentScore, activePlayer, playing, winningScore;
 
-// Initialize game
-const init = () => {
+// Starting conditions
+const init = function () {
     scores = [0, 0];
     currentScore = 0;
     activePlayer = 0;
     playing = true;
-    diceRolls = [];
-    winningScore = 100;
 
-    scoreEls.forEach(scoreEl => scoreEl.textContent = '0');
-    currentScoreEls.forEach(currentScoreEl => currentScoreEl.textContent = '0');
-    diceEls.forEach(diceEl => diceEl.classList.add('hidden'));
+    // Set the default winning score
+    winningScore = parseInt(winningScoreInput.value, 10) || 100;
 
-    playerEls.forEach((playerEl, i) => {
-        playerEl.classList.remove('player--winner', 'player--active');
-        if (i === 0) playerEl.classList.add('player--active');
-    });
+    score0El.textContent = 0;
+    score1El.textContent = 0;
+    current0El.textContent = 0;
+    current1El.textContent = 0;
 
-    nameEls.forEach((nameEl, i) => nameEl.textContent = `Player ${i + 1}`);
-
-    overlay.classList.remove('hidden');
+    diceEl.classList.add('hidden');
+    player0El.classList.remove('player--winner');
+    player1El.classList.remove('player--winner');
+    player0El.classList.add('player--active');
+    player1El.classList.remove('player--active');
 };
 
-// Switch player
-const switchPlayer = () => {
-    currentScoreEls[activePlayer].textContent = '0';
+// Initialize the game and show the overlay
+init();
+
+// Function to switch player
+const switchPlayer = function () {
+    document.getElementById(`current--${activePlayer}`).textContent = 0;
     currentScore = 0;
     activePlayer = activePlayer === 0 ? 1 : 0;
-    playerEls.forEach(playerEl => playerEl.classList.toggle('player--active'));
+    player0El.classList.toggle('player--active');
+    player1El.classList.toggle('player--active');
 };
 
-// Roll dice function
-btnRoll.addEventListener('click', () => {
+// Rolling dice functionality
+btnRoll.addEventListener('click', function () {
     if (playing) {
-        // Generate two random dice rolls
-        const dice1 = Math.trunc(Math.random() * 6) + 1;
-        const dice2 = Math.trunc(Math.random() * 6) + 1;
+        // 1. Generating a random dice roll
+        const dice = Math.trunc(Math.random() * 6) + 1;
 
-        diceRolls.push([dice1, dice2]);
+        // 2. Display dice
+        diceEl.classList.remove('hidden');
+        diceEl.src = `dice-${dice}.png`;
 
-        diceEls[0].src = `dice-${dice1}.png`;
-        diceEls[1].src = `dice-${dice2}.png`;
-
-        diceEls.forEach(diceEl => diceEl.classList.remove('hidden'));
-
-        if (dice1 === 1 && dice2 === 1) {
-            // Two 1s
-            scores[activePlayer] += 25;
-            scoreEls[activePlayer].textContent = scores[activePlayer];
-            switchPlayer();
-        } else if (dice1 === 1 || dice2 === 1) {
-            // One 1
-            switchPlayer();
-        } else if (dice1 === dice2) {
-            // Doubles
-            currentScore += (dice1 + dice2) * 2;
-            currentScoreEls[activePlayer].textContent = currentScore;
+        // 3. Check for rolled 1
+        if (dice !== 1) {
+            // Add dice to current score
+            currentScore += dice;
+            document.getElementById(`current--${activePlayer}`).textContent = currentScore;
         } else {
-            // Normal roll
-            currentScore += dice1 + dice2;
-            currentScoreEls[activePlayer].textContent = currentScore;
-        }
-
-        // Check for three consecutive doubles
-        if (diceRolls.length > 2 && diceRolls[diceRolls.length - 1][0] === diceRolls[diceRolls.length - 2][0] && diceRolls[diceRolls.length - 1][1] === diceRolls[diceRolls.length - 2][1]) {
-            if (diceRolls[diceRolls.length - 2][0] === diceRolls[diceRolls.length - 3][0] && diceRolls[diceRolls.length - 2][1] === diceRolls[diceRolls.length - 3][1]) {
-                // Three doubles in a row
-                switchPlayer();
-            }
+            // Switch to next player
+            switchPlayer();
         }
     }
 });
 
-// Hold function
-btnHold.addEventListener('click', () => {
+// Holding score functionality
+btnHold.addEventListener('click', function () {
     if (playing) {
+        // 1. Add current score to active player's score
         scores[activePlayer] += currentScore;
-        scoreEls[activePlayer].textContent = scores[activePlayer];
-        
+        document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer];
+
+        // 2. Check if player's score is >= winning score
         if (scores[activePlayer] >= winningScore) {
+            // Finish the game
             playing = false;
-            playerEls[activePlayer].classList.add('player--winner');
-            diceEls.forEach(diceEl => diceEl.classList.add('hidden'));
+            diceEl.classList.add('hidden');
+            document.querySelector(`.player--${activePlayer}`).classList.add('player--winner');
+            document.querySelector(`.player--${activePlayer}`).classList.remove('player--active');
         } else {
+            // Switch to the next player
             switchPlayer();
         }
     }
 });
 
-// New game function
+// New game functionality
 btnNew.addEventListener('click', init);
 
-// Setup names and winning score
-namesForm.addEventListener('submit', (e) => {
+// Set names and show the winning score form
+namesForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    playerCount = parseInt(playerCountInput.value);
-    playerNameInputs.forEach((input, i) => {
-        if (i < playerCount) {
-            nameEls[i].textContent = input.value;
-        } else {
-            nameEls[i].textContent = `Player ${i + 1}`;
-        }
-    });
-    overlay.classList.add('hidden');
-    init();
+    const player1Name = document.querySelector('#player1-name').value;
+    const player2Name = document.querySelector('#player2-name').value;
+
+    // Set player names or default to "Player 1" and "Player 2"
+    name0El.textContent = player1Name || 'Player 1';
+    name1El.textContent = player2Name || 'Player 2';
+
+    // Show the winning score form and hide the names form
+    namesForm.classList.add('hidden');
+    winningScoreForm.classList.remove('hidden');
 });
 
-winningScoreForm.addEventListener('submit', (e) => {
+// Set winning score and hide overlay
+winningScoreForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    winningScore = parseInt(winningScoreInput.value);
+    winningScore = parseInt(winningScoreInput.value, 10);
+
+    // Hide the winning score form and start the game
+    winningScoreForm.classList.add('hidden');
+    overlay.classList.add('hidden');
+    startGame(); // Initialize game with names and winning score
 });
+
+// Function to start the game after setting names and winning score
+const startGame = function () {
+    // Ensure the game starts correctly after the setup
+    init();
+};

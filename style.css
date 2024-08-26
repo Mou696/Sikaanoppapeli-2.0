@@ -104,19 +104,12 @@ main {
   font-size: 3rem;
 }
 
-/* Dice container */
-.dice-container {
+/* Dice image positioning */
+.dice {
   position: absolute;
   left: 50%;
-  top: 40%;
+  top: 35%;
   transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-/* Dice image styling */
-.dice {
   height: 10rem;
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
 }
