@@ -114,6 +114,8 @@ main {
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
 }
 
+/*           Button styling section            */
+
 /* General button styling */
 .btn {
   padding: 1.5rem 3rem;
@@ -138,7 +140,7 @@ main {
 
 /* Button active state */
 .btn:active {
-  transform: translateX(-50%) scale(1);
+  transform: translateX(-50%) scale(1.1);
 }
 
 /* New Game button positioning */
@@ -148,15 +150,18 @@ main {
 
 /* Roll Dice button positioning (lower on the screen) */
 .btn--roll {
-  top: 50%;
-  transform: translate(-50%, -50%);
+  top: 55%;
+  transform: translate(-50%, -17%);
 }
 
 /* Hold button positioning (below Roll Dice) */
 .btn--hold {
-  top: 65%;
-  transform: translate(-50%, -50%);
+  top: 70%;
+  transform: translate(-50%, -17%);
 }
+
+
+/*             Overlay section                  */
 
 /* Overlay styling for name and score input */
 .overlay {
@@ -206,7 +211,7 @@ main {
 
 /* Overlay buttons positioning (lower) */
 .overlay-content .btn {
-  margin-top: 3rem;
+  margin-top: 6rem;
 }
 
 /* Hidden elements */
