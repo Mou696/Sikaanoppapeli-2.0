@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+  height: 100vh;
+  color: #333;
+  background-image: linear-gradient(to top left, #753682 0%, #bf2e34 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Main game container */
+main {
+  position: relative;
+  width: 100rem;
+  height: 60rem;
+  background-color: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(200px);
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.25);
+  border-radius: 9px;
+  overflow: hidden;
+  display: flex;
+}
+
+/* Player section */
+.player {
+  flex: 50%;
+  padding: 9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.75s;
+}
+
+/* Active player styling */
+.player--active {
+  background-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Winner player styling */
+.player--winner {
+  background-color: #f7f7f7;
+  color: #333;
+  font-weight: 700;
+  position: relative;
+}
+
+.player--winner::after {
+  content: 'WINNER!';
+  font-size: 2rem;
+  width: 100%;
+  text-align: center;
+  color: #333;
+  position: absolute;
+  bottom: 4rem;
+}
+
+/* Player name styling */
+.name {
+  font-size: 2rem;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  letter-spacing: 0.5rem;
+}
+
+/* Player score styling */
+.score {
+  font-size: 5rem;
+  font-weight: 300;
+  margin-bottom: 2rem;
+}
+
+/* Current score section styling */
+.current {
+  background-color: #fff;
+  border-radius: 9px;
+  padding: 2rem 3rem;
+  color: #333;
+  width: 60%;
+  text-align: center;
+}
+
+/* Current score label */
+.current-label {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+/* Current score value */
+.current-score {
+  font-size: 3rem;
+}
+
+/* Dice container */
+.dice-container {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Dice image styling */
+.dice {
+  height: 10rem;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+}
+
+/* General button styling */
+.btn {
+  padding: 1.5rem 3rem;
+  font-size: 2rem;
+  font-family: inherit;
+  color: #333;
+  background-color: #f7f7f7;
+  border: none;
+  cursor: pointer;
+  border-radius: 9px;
+  transition: all 0.25s;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Button hover effect */
+.btn:hover {
+  transform: translateX(-50%) scale(1.1);
+}
+
+/* Button active state */
+.btn:active {
+  transform: translateX(-50%) scale(1);
+}
+
+/* New Game button positioning */
+.btn--new {
+  top: 4rem;
+}
+
+/* Roll Dice button positioning (lower on the screen) */
+.btn--roll {
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Hold button positioning (below Roll Dice) */
+.btn--hold {
+  top: 65%;
+  transform: translate(-50%, -50%);
+}
+
+/* Overlay styling for name and score input */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Overlay content container */
+.overlay-content {
+  background-color: #fff;
+  padding: 3rem 5rem;
+  border-radius: 9px;
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+/* Overlay heading */
+.overlay-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+/* Overlay label styling */
+.overlay-content label {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+/* Overlay input styling */
+.overlay-content input {
+  font-size: 1.8rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Overlay buttons positioning (lower) */
+.overlay-content .btn {
+  margin-top: 3rem;
+}
+
+/* Hidden elements */
+.hidden {
+  display: none;
+}
