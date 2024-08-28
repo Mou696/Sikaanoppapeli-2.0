@@ -25,7 +25,10 @@ const nameEls = [
     document.querySelector('#name--2'),
     document.querySelector('#name--3')
 ];
-const diceEl = document.querySelector('.dice');
+const diceEls = [
+    document.querySelector('.dice-1'),
+    document.querySelector('.dice-2')
+];
 const btnNew = document.querySelector('.btn--new');
 const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
@@ -51,7 +54,7 @@ const init = function () {
     scoreEls.forEach(scoreEl => scoreEl.textContent = 0);
     currentEls.forEach(currentEl => currentEl.textContent = 0);
 
-    diceEl.classList.add('hidden');
+    diceEls.forEach(diceEl => diceEl.classList.add('hidden'));
     playerEls.forEach((playerEl, index) => {
         playerEl.classList.remove('player--winner');
         playerEl.classList.remove('player--active');
@@ -73,17 +76,19 @@ const switchPlayer = function () {
 // Rolling dice functionality
 btnRoll.addEventListener('click', function () {
     if (playing) {
-        // 1. Generating a random dice roll
-        const dice = Math.trunc(Math.random() * 6) + 1;
+        // 1. Generating two random dice rolls
+        const dice1 = Math.trunc(Math.random() * 6) + 1;
+        const dice2 = Math.trunc(Math.random() * 6) + 1;
 
         // 2. Display dice
-        diceEl.classList.remove('hidden');
-        diceEl.src = `dice-${dice}.png`;
+        diceEls.forEach(diceEl => diceEl.classList.remove('hidden'));
+        diceEls[0].src = `dice-${dice1}.png`;
+        diceEls[1].src = `dice-${dice2}.png`;
 
-        // 3. Check for rolled 1
-        if (dice !== 1) {
+        // 3. Check for rolled 1s
+        if (dice1 !== 1 && dice2 !== 1) {
             // Add dice to current score
-            currentScore += dice;
+            currentScore += dice1 + dice2;
             currentEls[activePlayer].textContent = currentScore;
         } else {
             // Switch to next player
@@ -103,7 +108,7 @@ btnHold.addEventListener('click', function () {
         if (scores[activePlayer] >= winningScore) {
             // Finish the game
             playing = false;
-            diceEl.classList.add('hidden');
+            diceEls.forEach(diceEl => diceEl.classList.add('hidden'));
             playerEls[activePlayer].classList.add('player--winner');
             playerEls[activePlayer].classList.remove('player--active');
         } else {
@@ -180,4 +185,4 @@ function selectPlayers(players) {
 }
 
 
-/*                WORKS               */
+/*                 WORKS                */

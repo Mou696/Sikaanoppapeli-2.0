@@ -33,14 +33,14 @@ main {
   border-radius: 9px;
   overflow: hidden;
   display: flex;
-  flex-wrap: wrap; /* Allows wrapping of player sections */
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
 
 /* Player section */
 .player {
-  flex: 1 1 45%; /* Adjusts to fit 2 players side-by-side on large screens */
+  flex: 1 1 45%;
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -117,11 +117,22 @@ main {
 /* Dice image positioning */
 .dice {
   position: absolute;
-  left: 50%;
-  top: 35%;
-  transform: translate(-50%, -50%);
   height: 10rem;
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  transition: all 0.3s;
+}
+
+/* Positioning the two dice side by side */
+.dice-1 {
+  left: 45%;
+  top: 35%;
+  transform: translate(-50%, -50%);
+}
+
+.dice-2 {
+  left: 55%;
+  top: 35%;
+  transform: translate(-50%, -50%);
 }
 
 /* Button styling section */
@@ -231,4 +242,5 @@ main {
   display: none;
 }
 
-/*                   WORKS                       */
+
+/*           WORKS           */
