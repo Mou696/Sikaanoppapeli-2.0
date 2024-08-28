@@ -33,7 +33,7 @@ const namesForm = document.querySelector('#names-form');
 const winningScoreForm = document.querySelector('#winning-score-form');
 const winningScoreInput = document.querySelector('#winning-score');
 const overlay = document.querySelector('#start-overlay');
-const playerSelectionOverlay = document.querySelector('#player-selection');
+const playerSelectionOverlay = document.querySelector('#start-overlay'); // Updated to match the correct ID
 const btnSelectPlayers = document.querySelectorAll('.btn--select-player');
 
 let scores, currentScore, activePlayer, playing, winningScore, numPlayers;
@@ -52,14 +52,11 @@ const init = function () {
     currentEls.forEach(currentEl => currentEl.textContent = 0);
 
     diceEl.classList.add('hidden');
-    playerEls.forEach(playerEl => {
+    playerEls.forEach((playerEl, index) => {
         playerEl.classList.remove('player--winner');
         playerEl.classList.remove('player--active');
-        playerEl.classList.add('hidden');
+        playerEl.classList.toggle('hidden', index >= numPlayers);
     });
-    for (let i = 0; i < numPlayers; i++) {
-        playerEls[i].classList.remove('hidden');
-    }
     playerEls[0].classList.add('player--active');
 };
 
@@ -68,7 +65,9 @@ const switchPlayer = function () {
     currentEls[activePlayer].textContent = 0;
     currentScore = 0;
     activePlayer = (activePlayer + 1) % numPlayers;
-    playerEls.forEach(playerEl => playerEl.classList.toggle('player--active', playerEls.indexOf(playerEl) === activePlayer));
+    playerEls.forEach((playerEl, index) => {
+        playerEl.classList.toggle('player--active', index === activePlayer);
+    });
 };
 
 // Rolling dice functionality
@@ -179,3 +178,6 @@ function selectPlayers(players) {
     // Show the names form
     namesForm.classList.remove('hidden');
 }
+
+
+/*                WORKS               */

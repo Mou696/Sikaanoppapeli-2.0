@@ -3,7 +3,7 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 html {
@@ -34,12 +34,14 @@ main {
   overflow: hidden;
   display: flex;
   flex-wrap: wrap; /* Allows wrapping of player sections */
+  justify-content: center;
+  align-items: center;
 }
 
 /* Player section */
 .player {
-  flex: 1 1 50%; /* Adjusts to fit 2 players side-by-side on large screens */
-  padding: 9rem;
+  flex: 1 1 45%; /* Adjusts to fit 2 players side-by-side on large screens */
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -72,7 +74,8 @@ main {
   text-align: center;
   color: #333;
   position: absolute;
-  bottom: 4rem;
+  bottom: 2rem;
+  left: 0;
 }
 
 /* Player name styling */
@@ -121,9 +124,7 @@ main {
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
 }
 
-/*           Button styling section            */
-
-/* General button styling */
+/* Button styling section */
 .btn {
   padding: 1.5rem 3rem;
   font-size: 2rem;
@@ -135,41 +136,40 @@ main {
   border-radius: 9px;
   transition: all 0.25s;
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  display: inline-block;
 }
 
 /* Button hover effect */
 .btn:hover {
-  transform: translateX(-50%) scale(1.1);
+  transform: scale(1.1);
 }
 
 /* Button active state */
 .btn:active {
-  transform: translateX(-50%) scale(1.1);
+  transform: scale(1.1);
 }
 
 /* New Game button positioning */
 .btn--new {
+  position: absolute;
   top: 4rem;
 }
 
 /* Roll Dice button positioning (lower on the screen) */
 .btn--roll {
+  position: absolute;
   top: 55%;
-  transform: translate(-50%, -10%);
+  transform: translate(-2%, -5%);
 }
 
 /* Hold button positioning (below Roll Dice) */
 .btn--hold {
+  position: absolute;
   top: 70%;
-  transform: translate(-50%, -10%);
+  transform: translate(-2%, -5%);
 }
 
-/*             Overlay section                  */
-
-/* Overlay styling for name and score input */
+/* Overlay section */
 .overlay {
   position: absolute;
   top: 0;
@@ -230,3 +230,5 @@ main {
 .hidden {
   display: none;
 }
+
+/*                   WORKS                       */
