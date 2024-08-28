@@ -33,16 +33,23 @@ main {
   border-radius: 9px;
   overflow: hidden;
   display: flex;
+  flex-wrap: wrap; /* Allows wrapping of player sections */
 }
 
 /* Player section */
 .player {
-  flex: 50%;
+  flex: 1 1 50%; /* Adjusts to fit 2 players side-by-side on large screens */
   padding: 9rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   transition: all 0.75s;
+  box-sizing: border-box;
+}
+
+/* Ensure visibility for up to 4 players */
+.player.hidden {
+  display: none;
 }
 
 /* Active player styling */
@@ -151,15 +158,14 @@ main {
 /* Roll Dice button positioning (lower on the screen) */
 .btn--roll {
   top: 55%;
-  transform: translate(-50%, -17%);
+  transform: translate(-50%, -10%);
 }
 
 /* Hold button positioning (below Roll Dice) */
 .btn--hold {
   top: 70%;
-  transform: translate(-50%, -17%);
+  transform: translate(-50%, -10%);
 }
-
 
 /*             Overlay section                  */
 
@@ -184,6 +190,7 @@ main {
   border-radius: 9px;
   box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.3);
   text-align: center;
+  max-width: 90%;
 }
 
 /* Overlay heading */
@@ -212,6 +219,11 @@ main {
 /* Overlay buttons positioning (lower) */
 .overlay-content .btn {
   margin-top: 6rem;
+}
+
+/* Player selection button */
+.btn--select-player {
+  margin: 1rem;
 }
 
 /* Hidden elements */

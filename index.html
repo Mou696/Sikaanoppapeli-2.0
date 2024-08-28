@@ -12,13 +12,22 @@
     <div id="start-overlay" class="overlay">
         <div class="overlay-content">
             <h2>Setup Your Game</h2>
-            <form id="names-form">
-                <label for="player1-name">Player 1 Name:</label>
-                <input type="text" id="player1-name" required />
-                <label for="player2-name">Player 2 Name:</label>
-                <input type="text" id="player2-name" required />
+
+            <!-- Player Count Selection -->
+            <h3>Select Number of Players</h3>
+            <button onclick="selectPlayers(2)" class="btn">2 Players</button>
+            <button onclick="selectPlayers(3)" class="btn">3 Players</button>
+            <button onclick="selectPlayers(4)" class="btn">4 Players</button>
+
+            <!-- Player Names Form -->
+            <form id="names-form" class="hidden">
+                <div id="player-names">
+                    <!-- Dynamic player name inputs will be generated here -->
+                </div>
                 <button type="submit" class="btn btn--set-names">Set Names</button>
             </form>
+
+            <!-- Winning Score Form -->
             <form id="winning-score-form" class="hidden">
                 <label for="winning-score">Set Winning Score:</label>
                 <input type="number" id="winning-score" min="1" value="100" required />
@@ -28,6 +37,7 @@
     </div>
 
     <main>
+        <!-- Player Sections -->
         <section class="player player--0 player--active">
             <h2 class="name" id="name--0">Player 1</h2>
             <p class="score" id="score--0">0</p>
@@ -42,6 +52,22 @@
             <div class="current">
                 <p class="current-label">Current</p>
                 <p class="current-score" id="current--1">0</p>
+            </div>
+        </section>
+        <section class="player player--2 hidden">
+            <h2 class="name" id="name--2">Player 3</h2>
+            <p class="score" id="score--2">0</p>
+            <div class="current">
+                <p class="current-label">Current</p>
+                <p class="current-score" id="current--2">0</p>
+            </div>
+        </section>
+        <section class="player player--3 hidden">
+            <h2 class="name" id="name--3">Player 4</h2>
+            <p class="score" id="score--3">0</p>
+            <div class="current">
+                <p class="current-label">Current</p>
+                <p class="current-score" id="current--3">0</p>
             </div>
         </section>
 
