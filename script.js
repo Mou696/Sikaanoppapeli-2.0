@@ -91,10 +91,7 @@ btnRoll.addEventListener('click', function () {
         if (dice1 === dice2) {
             doubleRollCount++;
 
-            if (dice1 === 3) {
-                // Double 3s, double the points (3+3=6, doubled to 12)
-                currentScore += 12;
-            } else if (dice1 === 1) {
+            if (dice1 === 1) {
                 // Double 1s, award 25 points
                 currentScore += 25;
             } else {
@@ -214,5 +211,3 @@ function selectPlayers(players) {
     // Show the names form
     namesForm.classList.remove('hidden');
 }
-
-/*                 WORKS                 */
