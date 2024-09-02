@@ -39,7 +39,7 @@ const overlay = document.querySelector('#start-overlay');
 const playerSelectionOverlay = document.querySelector('#start-overlay'); // Updated to match the correct ID
 const btnSelectPlayers = document.querySelectorAll('.btn--select-player');
 
-let scores, currentScore, activePlayer, playing, winningScore, numPlayers;
+let scores, currentScore, activePlayer, playing, winningScore, numPlayers, doubleRollCount;
 
 // Starting conditions
 const init = function () {
@@ -47,6 +47,7 @@ const init = function () {
     currentScore = 0;
     activePlayer = 0;
     playing = true;
+    doubleRollCount = 0; // Counter for consecutive doubles
 
     // Set the default winning score
     winningScore = parseInt(winningScoreInput.value, 10) || 100;
@@ -67,6 +68,7 @@ const init = function () {
 const switchPlayer = function () {
     currentEls[activePlayer].textContent = 0;
     currentScore = 0;
+    doubleRollCount = 0; // Reset the double roll counter when switching players
     activePlayer = (activePlayer + 1) % numPlayers;
     playerEls.forEach((playerEl, index) => {
         playerEl.classList.toggle('player--active', index === activePlayer);
@@ -85,15 +87,44 @@ btnRoll.addEventListener('click', function () {
         diceEls[0].src = `dice-${dice1}.png`;
         diceEls[1].src = `dice-${dice2}.png`;
 
-        // 3. Check for rolled 1s
-        if (dice1 !== 1 && dice2 !== 1) {
-            // Add dice to current score
-            currentScore += dice1 + dice2;
-            currentEls[activePlayer].textContent = currentScore;
+        // 3. Check for doubles and special cases
+        if (dice1 === dice2) {
+            doubleRollCount++;
+
+            if (dice1 === 3) {
+                // Double 3s, double the points (3+3=6, doubled to 12)
+                currentScore += 12;
+            } else if (dice1 === 1) {
+                // Double 1s, award 25 points
+                currentScore += 25;
+            } else {
+                // Other doubles, add double the rolled value
+                currentScore += 2 * (dice1 + dice2);
+            }
+
+            // If player rolls doubles three times in a row, lose all points for this round
+            if (doubleRollCount === 3) {
+                currentScore = 0;
+                switchPlayer();
+                return;
+            }
         } else {
-            // Switch to next player
-            switchPlayer();
+            // Reset double roll count if not doubles
+            doubleRollCount = 0;
+
+            // Check for rolled 1s
+            if (dice1 !== 1 && dice2 !== 1) {
+                // Add dice to current score
+                currentScore += dice1 + dice2;
+            } else {
+                // Switch to next player
+                switchPlayer();
+                return;
+            }
         }
+
+        // Update current score display
+        currentEls[activePlayer].textContent = currentScore;
     }
 });
 
@@ -164,7 +195,7 @@ btnSelectPlayers.forEach(button => {
 // Function to handle player selection
 function selectPlayers(players) {
     numPlayers = players;
-    
+
     // Adjust the player name input form
     const playerNamesDiv = document.getElementById('player-names');
     playerNamesDiv.innerHTML = '';
@@ -184,5 +215,4 @@ function selectPlayers(players) {
     namesForm.classList.remove('hidden');
 }
 
-
-/*                 WORKS                */
+/*                 WORKS                 */
